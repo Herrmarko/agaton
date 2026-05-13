@@ -1,0 +1,255 @@
+/* =========================================================
+   Agaton — Tillgänglighet (WCAG 2.1 AA)
+   Globala anpassningar. Inkluderas på alla sidor via
+   agaton-chrome.js (laddas efter agaton.css så det vinner).
+   ========================================================= */
+
+/* ---------- Token-justeringar för kontrast (WCAG 1.4.3) ---------- */
+:root{
+  /* Brödtext-token: höjda från 70%/40% till nivåer som ger
+     minst 4.5:1 mot var(--cream) #F6EEDC. */
+  --ink-soft:   color-mix(in oklab, #2E1A10 82%, transparent);
+  --ink-faint:  color-mix(in oklab, #2E1A10 66%, transparent);
+
+  /* UI-komponenter — formulärkanter, dividers (3:1) */
+  --line:       color-mix(in oklab, #2E1A10 42%, transparent);
+  --line-faint: color-mix(in oklab, #2E1A10 18%, transparent);
+}
+
+/* ---------- Skip-link (WCAG 2.4.1) ---------- */
+.skip-link{
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 100000;
+  background: var(--wood, #2E1A10);
+  color: var(--cream, #F6EEDC);
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-family: var(--sans, system-ui);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform .15s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible{
+  transform: translateY(0);
+  outline: 3px solid var(--candle, #F2C66A);
+  outline-offset: 2px;
+}
+
+/* ---------- Visuellt dold men läsbar för skärmläsare ---------- */
+.sr-only{
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Fokusring (WCAG 2.4.7) ---------- */
+:focus-visible{
+  outline: 3px solid var(--brick, #B23A2E);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+/* På mörka sektioner — varm ljus ring för >= 3:1 mot bakgrunden */
+.bg-wood :focus-visible,
+.hero :focus-visible,
+.menu-preview :focus-visible,
+.booking :focus-visible,
+.press :focus-visible,
+.footer :focus-visible,
+.nav-drawer :focus-visible,
+.navbar.on-dark:not(.scrolled) :focus-visible,
+[data-theme="ink"] .navbar:not(.scrolled) :focus-visible{
+  outline-color: var(--candle, #F2C66A);
+  border-radius: 4px;
+}
+/* Formulärfält: inre ring + tydlig kantfärg */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline: 3px solid var(--brick, #B23A2E);
+  outline-offset: 0;
+  border-color: var(--brick, #B23A2E) !important;
+}
+
+/* ---------- Formulär — kanter, hjälptext, fel ---------- */
+.form-field input,
+.form-field select,
+.form-field textarea,
+.field input,
+.field select,
+.field textarea,
+.inquiry-form input,
+.inquiry-form select,
+.inquiry-form textarea,
+.s-form input,
+.s-form select,
+.s-form textarea{
+  border-color: color-mix(in oklab, #2E1A10 42%, transparent) !important;
+}
+.form-field input::placeholder,
+.form-field textarea::placeholder,
+.field input::placeholder,
+.field textarea::placeholder,
+.inquiry-form input::placeholder,
+.inquiry-form textarea::placeholder,
+.s-form input::placeholder,
+.s-form textarea::placeholder{
+  color: color-mix(in oklab, #2E1A10 60%, transparent);
+  opacity: 1;
+}
+/* Etiketter — säkerställ läsbarhet */
+.form-field label,
+.field label{
+  color: var(--ink-soft) !important;
+  font-weight: 500;
+}
+
+.req-mark{
+  color: #8A1A12;
+  margin-left: 2px;
+  font-weight: 700;
+}
+.field-hint{
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-family: var(--sans, system-ui);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.field-error{
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-family: var(--sans, system-ui);
+  color: #8A1A12;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+[aria-invalid="true"]{
+  border-color: #8A1A12 !important;
+  background: color-mix(in oklab, #8A1A12 5%, var(--white, #FBF7EC)) !important;
+}
+/* "(valfritt)" — gör sekundär men läsbar */
+.opt-label{
+  font-weight: 400;
+  color: var(--ink-faint);
+  letter-spacing: .04em;
+  text-transform: none;
+  font-size: .85em;
+  margin-left: 4px;
+}
+
+/* ---------- Touch / hit targets (WCAG 2.5.5) ---------- */
+.nav-burger{ width: 48px; height: 48px; }
+.form-field input,
+.form-field select,
+.form-field textarea,
+.field input,
+.field select{ min-height: 44px; }
+.btn, .form-submit, .nav-cta{ min-height: 44px; }
+
+/* ---------- Mörka sektioner — höj textkontrast ---------- */
+.footer-col p,
+.footer-col a,
+.footer-brand p,
+.visit-address span,
+.nav-drawer-info,
+.nav-drawer-info p{
+  color: color-mix(in oklab, var(--cream, #F6EEDC) 94%, transparent) !important;
+}
+.footer-hours li{
+  color: color-mix(in oklab, var(--cream, #F6EEDC) 94%, transparent) !important;
+}
+.footer-hours li span:first-child,
+.footer-col h4,
+.visit-link__lbl{
+  color: color-mix(in oklab, var(--cream, #F6EEDC) 78%, transparent) !important;
+}
+.footer-bottom{
+  color: color-mix(in oklab, var(--cream, #F6EEDC) 82%, transparent) !important;
+}
+.footer-brand p[style]{
+  color: color-mix(in oklab, var(--cream, #F6EEDC) 92%, transparent) !important;
+}
+/* Cream-text på brick (huvudknapp m.m.) — brick #B23A2E + cream = ca 4.7:1 OK */
+.btn-brick{ font-weight: 600; }
+.nav-cta{ font-weight: 700; }
+
+/* "scrolled" navbar — höj nav-link kontrast */
+.navbar.scrolled .nav-link,
+.navbar:not(.on-dark) .nav-link{
+  color: var(--wood, #2E1A10);
+}
+
+/* Eyebrow / tiny — när de bär information (inte bara dekor),
+   se till att de inte är osynliga */
+.eyebrow, .tiny, .small{
+  color-scheme: light;
+}
+.eyebrow{ color: var(--brick, #B23A2E); }
+.tiny{ color: var(--ink-faint); }
+
+/* ---------- Länkar som inte är knappar — synlig understrykning
+   när de står inuti brödtext (WCAG 1.4.1 om färg inte ensam) ---------- */
+.lead a:not(.btn),
+.intro-copy p a:not(.btn),
+.booking p a:not(.btn),
+main p a:not(.btn){
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, currentColor 50%, transparent);
+}
+
+/* ---------- Disable purely decorative motion under reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html{ scroll-behavior: auto !important; }
+  .ticker-track{ animation: none !important; transform: none !important; }
+  .mp-stamp{ animation: none !important; }
+  .photo:hover img{ transform: none !important; }
+  .reveal{ opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- Reglerar att dolda drawer-länkar inte tabbas ---------- */
+.nav-drawer:not(.open){
+  visibility: hidden;
+}
+.nav-drawer.open{
+  visibility: visible;
+}
+
+/* ---------- Tillgänglighetslänk i footer ---------- */
+.footer-a11y-link{
+  display: inline-block;
+  margin-left: 18px;
+  color: color-mix(in oklab, var(--cream, #F6EEDC) 70%, transparent);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  letter-spacing: .04em;
+}
+.footer-a11y-link:hover,
+.footer-a11y-link:focus-visible{
+  color: var(--candle, #F2C66A);
+}
+@media (max-width: 520px){
+  .footer-a11y-link{ margin-left: 0; }
+}

@@ -6,7 +6,7 @@
 <title>Agaton — Ristorante Italiano</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Barlow+Condensed:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Style+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Barlow+Condensed:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:wght@400;500&family=Style+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="agaton.css">
 <script src="agaton-chrome.js?v=5" data-active="home"></script>
 <style>
@@ -25,7 +25,8 @@
   position: absolute; inset: 0;
   z-index: 0;
 }
-.hero-bg img{
+.hero-bg img,
+.hero-bg video{
   width:100%; height:100%; object-fit:cover;
   filter: brightness(.55) saturate(1.05);
 }
@@ -37,8 +38,35 @@
 .hero-inner{
   position: relative; z-index: 2;
   flex: 1; display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 0 48px 72px;
+  padding: 0 56px 40px;
   max-width: 1600px; margin: 0 auto; width: 100%;
+}
+
+/* Centered tagline that sits directly under the logo, mid-hero */
+.hero-tagline{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(50% + 24px));
+  z-index: 4;
+  text-align: center;
+  pointer-events: none;
+}
+.hero-tagline .lede{
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(15px, 1.35vw, 19px);
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--cream) 88%, transparent);
+  max-width: 46ch;
+  margin: 0 auto;
+  letter-spacing: .005em;
+}
+.hero-tagline .rule{
+  width: 56px; height: 1px;
+  background: color-mix(in oklab, var(--cream) 35%, transparent);
+  margin: 22px auto 0;
 }
 .hero-eyebrow{
   display:flex; align-items:center; gap:14px;
@@ -72,23 +100,24 @@
   opacity: 1;
 }
 
-.hero-bottom{
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px;
-  grid-template-rows: auto auto;
-  margin-top: 56px;
-  align-items: end;
+/* Bottom rail — editorial masthead pinned to the foot of the hero */
+.hero-rail{
+  display: flex; flex-direction: column; align-items: stretch;
+  gap: 22px;
 }
-.hero-lede{
-  max-width: 40ch;
-  font-size: 16px; line-height: 1.7;
-  color: color-mix(in oklab, var(--cream) 85%, transparent);
+.hero-rail .rail-divider{
+  height: 1px;
+  background: color-mix(in oklab, var(--cream) 18%, transparent);
 }
 .hero-meta{
-  display:flex; flex-direction:column; gap: 14px;
-  font-family: var(--sans); font-size: 12px;
-  letter-spacing: .12em; text-transform: uppercase;
+  display: flex; flex-direction: row; gap: 72px;
+  justify-content: center;
+  font-family: var(--sans); font-size: 10.5px;
+  letter-spacing: .22em; text-transform: uppercase;
   color: var(--cream-3);
+  text-align: center;
 }
+.hero-meta > div{ display:flex; flex-direction:column; gap: 6px; align-items:center; }
 .hero-meta strong{
   display:block;
   font-family: var(--display);
@@ -96,10 +125,10 @@
   font-size: 17px;
   letter-spacing: 0; text-transform: none;
   color: var(--cream);
-  margin-top: 4px;
 }
-.hero-ctas{ display:flex; flex-direction:column; gap: 12px; align-items: flex-start; justify-self: end; }
-.hero-ctas .btn{ min-width: 240px; justify-content: space-between; }
+.hero-ctas{ display:flex; flex-direction:row; gap: 10px; align-items: center; justify-content: center; }
+
+.hero-ctas .btn{ min-width: 240px; justify-content: center; }
 
 /* removed hero-scroll */
 
@@ -149,8 +178,8 @@
   position: relative;
 }
 .intro-grid{
-  display: grid; grid-template-columns: 1fr 1.2fr; gap: 90px;
-  align-items: start;
+  display: grid; grid-template-columns: 1fr 1.05fr; gap: 90px;
+  align-items: center;
 }
 .intro-copy .script{
   display: block; margin-bottom: 10px;
@@ -162,18 +191,25 @@
 .intro-copy h2{
   font-family: var(--display);
   font-weight: 400; font-style: italic;
+  text-wrap: balance;
   font-size: clamp(56px, 7vw, 108px);
   line-height: .98;
   letter-spacing: -0.015em;
   color: var(--wood);
-  margin-bottom: 36px;
+  margin-bottom: 22px;
+}
+.intro-copy .lead{
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(20px, 1.6vw, 24px); line-height: 1.45;
+  color: var(--ink); max-width: 38ch;
+  margin-bottom: 28px;
 }
 .intro-copy h2 .bold{
   font-style: normal; font-weight: 600; color: var(--brick);
 }
 .intro-copy p{
   font-size: 17px; line-height: 1.75; color: var(--ink-soft);
-  max-width: 50ch; margin-bottom: 20px;
+  max-width: 50ch; margin-bottom: 16px;
 }
 .intro-copy .sig{
   margin-top: 40px;
@@ -184,7 +220,7 @@
 
 .intro-photos{
   position: relative;
-  height: 640px;
+  height: 560px;
 }
 .intro-photos .photo{
   position: absolute; box-shadow: var(--shadow-lg);
@@ -205,7 +241,7 @@
   z-index: 4;
 }
 .intro-photos .stamp-wrap{
-  position: absolute; bottom: 110px; right: -30px;
+  position: absolute; top: -28px; right: -28px;
   width: 140px; height: 140px;
   display: grid; place-items: center;
   background: var(--cream);
@@ -235,10 +271,12 @@
 
 .mp-grid{
   display: grid;
-  grid-template-columns: 1fr 0.95fr;
+  grid-template-columns: 0.95fr 1fr;
   gap: 120px;
   align-items: center;
 }
+.mp-left{ order: 2; margin-left: auto; }
+.mp-right{ order: 1; }
 
 .mp-left{ max-width: 580px; }
 .mp-script{
@@ -309,18 +347,18 @@
   margin-bottom: 52px;
   padding: 36px 0 0;
   border-top: 1px solid color-mix(in oklab, var(--cream) 14%, transparent);
+  justify-content: center;
 }
 .mp-cat{
   font-family: var(--display); font-style: italic;
   font-size: 22px; color: color-mix(in oklab, var(--cream) 78%, transparent);
-  transition: color .25s var(--ease);
   cursor: default;
 }
 .mp-cat:not(:last-child)::after{ content: "·"; margin-left: 14px; opacity: .35; font-style: normal; }
-.mp-cat:hover{ color: var(--candle); }
 
 .mp-ctas{
   display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
+  justify-content: center;
 }
 .btn-candle{
   background: var(--candle); color: var(--wood);
@@ -348,14 +386,14 @@
   min-height: 640px;
 }
 .mp-photo-main{
-  position: absolute; top: 0; right: 0;
+  position: absolute; top: 0; left: 0;
   width: 88%; aspect-ratio: 4/5;
   border-radius: 2px; overflow: hidden;
   box-shadow: 0 30px 80px -20px rgba(0,0,0,.55), 0 10px 30px -10px rgba(0,0,0,.4);
 }
-.mp-photo-main img{ width:100%; height:100%; object-fit: cover; display: block; }
+.mp-photo-main img{ width:100%; height:100%; object-fit: cover; object-position: center 75%; display: block; }
 .mp-photo-small{
-  position: absolute; bottom: -40px; left: 0;
+  position: absolute; bottom: -40px; right: 0;
   width: 52%; aspect-ratio: 1/1;
   border-radius: 2px; overflow: hidden;
   border: 10px solid var(--wood);
@@ -365,7 +403,7 @@
 .mp-photo-small img{ width:100%; height:100%; object-fit: cover; display: block; }
 
 .mp-stamp{
-  position: absolute; top: 30px; left: -34px;
+  position: absolute; top: 30px; right: -34px;
   width: 128px; height: 128px; border-radius: 50%;
   background: var(--brick); color: var(--cream);
   display: grid; place-items: center;
@@ -401,9 +439,10 @@
 @media (max-width: 900px){
   .menu-preview{ padding: 90px 0 110px; }
   .mp-grid{ grid-template-columns: 1fr; gap: 80px; }
-  .mp-right{ min-height: 500px; max-width: 480px; margin: 0 auto; }
+  .mp-left{ order: 1; }
+  .mp-right{ order: 2; min-height: 500px; max-width: 480px; margin: 0 auto; }
   .mp-left h2{ font-size: clamp(48px, 11vw, 80px); }
-  .mp-stamp{ width: 100px; height: 100px; top: 20px; left: -20px; }
+  .mp-stamp{ width: 100px; height: 100px; top: 20px; right: -20px; }
   .mp-stamp-mid{ font-size: 18px; }
 }
 
@@ -547,11 +586,11 @@
 }
 .booking-grid{
   display: grid; grid-template-columns: 1fr 1fr; gap: 90px;
-  align-items: center;
+  align-items: start;
 }
 .booking h2{
   font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: clamp(54px, 7vw, 108px);
+  font-size: clamp(48px, 5.6vw, 84px);
   line-height: .95;
   color: var(--cream);
 }
@@ -561,9 +600,39 @@
 }
 .booking p{
   color: color-mix(in oklab, var(--cream) 82%, transparent);
-  max-width: 44ch; font-size: 17px; line-height: 1.7;
+  max-width: 48ch; font-size: 17px; line-height: 1.75;
   margin-top: 32px;
 }
+.booking p em{ color: var(--candle); font-style: italic; }
+.booking-intro{ display: flex; flex-direction: column; gap: 40px; }
+.booking-text{ max-width: 52ch; }
+
+.booking-photo{
+  position: relative;
+  width: 100%; max-width: 460px;
+  margin: 0;
+}
+.booking-photo img{
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+  box-shadow: 0 30px 60px -25px rgba(0,0,0,.6), 0 8px 20px -8px rgba(0,0,0,.3);
+}
+.booking-photo figcaption{
+  margin-top: 14px;
+  font-family: var(--display); font-style: italic;
+  font-size: 14px; letter-spacing: .02em;
+  color: color-mix(in oklab, var(--cream) 65%, transparent);
+  display: flex; align-items: center; gap: 14px;
+}
+.booking-photo figcaption::before{
+  content: ""; width: 36px; height: 1px;
+  background: color-mix(in oklab, var(--candle) 70%, transparent);
+}
+
+@media (max-width: 900px){
+  .booking-intro{ gap: 36px; }
+  .booking-photo{ max-width: 100%; }
+}
+
 .booking-form{
   background: var(--cream);
   color: var(--wood);
@@ -630,6 +699,44 @@
 }
 .footer-col a:hover{ color: var(--candle); }
 .footer-col p{ color: color-mix(in oklab, var(--cream) 72%, transparent); font-size: 14px; line-height: 1.75; }
+
+/* Highlighted visit column */
+.footer-visit h4{
+  margin-bottom: 24px;
+}
+.visit-address{
+  display: flex; flex-direction: column; gap: 4px;
+  padding-bottom: 18px; margin-bottom: 18px;
+  border-bottom: 1px solid color-mix(in oklab, var(--cream) 16%, transparent);
+}
+.visit-address strong{
+  font-family: var(--display); font-weight: 500; font-size: 19px; letter-spacing: .01em;
+  color: var(--cream);
+}
+.visit-address span{
+  font-size: 13px; color: color-mix(in oklab, var(--cream) 62%, transparent);
+  letter-spacing: .04em;
+}
+.visit-contact{ display: flex; flex-direction: column; gap: 14px; }
+.visit-link{
+  display: flex; flex-direction: column; gap: 3px;
+  text-decoration: none; color: var(--cream);
+  transition: color .2s var(--ease, ease);
+}
+.visit-link__lbl{
+  font-family: var(--sans); font-size: 9px; letter-spacing: .26em; text-transform: uppercase;
+  color: color-mix(in oklab, var(--cream) 50%, transparent); font-weight: 600;
+}
+.visit-link__val{
+  font-family: var(--display); font-size: 16px; letter-spacing: .01em;
+  color: var(--cream);
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+  transition: border-color .2s ease, color .2s ease;
+}
+.visit-link:hover .visit-link__val{
+  color: var(--candle); border-bottom-color: var(--candle);
+}
 
 .footer-bottom{
   max-width: 1600px; margin: 36px auto 0;
@@ -707,30 +814,33 @@
   .intro-photos{ height: 400px; }
   .intro-photos .p1{ width: 70%; }
   .intro-photos .p2{ width: 55%; }
-  .intro-photos .stamp-wrap{ right: 0; width: 110px; height: 110px; }
+  .intro-photos .stamp-wrap{ top: -18px; right: -10px; width: 110px; height: 110px; }
   .mp-grid{ grid-template-columns: 1fr; gap: 48px; }
   .mp-right{ min-height: 380px; max-width: 100%; }
   .mp-photo-small{ display: none; }
-  .mp-stamp{ width: 90px; height: 90px; left: -10px; }
+  .mp-stamp{ width: 90px; height: 90px; right: -10px; }
   .mp-left h2{ font-size: clamp(44px, 12vw, 72px); }
   .booking-grid{ grid-template-columns: 1fr; gap: 40px; }
   .booking-form{ padding: 24px 16px; }
   .booking h2{ font-size: clamp(44px, 12vw, 72px); }
   .intro-copy h2{ font-size: clamp(36px, 10vw, 56px); }
-  .hero-lede{ display: none; }
+  .hero-tagline{ display: none; }
+  .hero-rail{ gap: 18px; }
+  .hero-meta{ gap: 28px; flex-wrap: wrap; }
+  .hero-ctas{ flex-wrap: wrap; }
 }
 </style>
 </head>
 <body>
 
 <!-- ============ NAVBAR ============ -->
-<nav class="navbar on-dark" id="navbar">
-  <a href="Agaton.html" class="brand">
-    <img src="agaton_logo_dark.svg" class="brand-logo brand-logo-light" alt="Agaton" width="96" height="46">
-    <img src="agaton_logo.svg" class="brand-logo brand-logo-dark" alt="Agaton" width="96" height="46">
+<nav class="navbar on-dark" id="navbar" aria-label="Huvudnavigering">
+  <a href="Agaton.html" class="brand" aria-label="Agaton Ristorante e Pizzeria — till startsidan">
+    <img src="agaton_logo_dark.svg" class="brand-logo brand-logo-light" alt="" width="96" height="46">
+    <img src="agaton_logo.svg" class="brand-logo brand-logo-dark" alt="" width="96" height="46">
   </a>
   <div class="nav-links">
-    <a href="Agaton.html" class="nav-link active">Hem</a>
+    <a href="Agaton.html" class="nav-link active" aria-current="page">Hem</a>
     <a href="menu.html" class="nav-link">Meny</a>
     <a href="lunch.html" class="nav-link">Lunch</a>
     <a href="om-oss.html" class="nav-link">Om oss</a>
@@ -741,12 +851,12 @@
     <a href="menu.html" class="nav-cta nav-cta-ghost">Se menyn</a>
     <a href="#booking" class="nav-cta">Boka bord</a>
   </div>
-  <button class="nav-burger" id="nav-burger" aria-label="Öppna meny">
-    <span></span><span></span><span></span>
+  <button class="nav-burger" id="nav-burger" type="button" aria-label="Öppna meny" aria-expanded="false" aria-controls="nav-drawer">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
   </button>
 </nav>
 
-<div class="nav-drawer" id="nav-drawer">
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Huvudmeny" aria-hidden="true">
   <div class="nav-drawer-inner">
     <div class="nav-drawer-links">
       <a href="Agaton.html" class="nav-drawer-link active">Hem</a>
@@ -786,30 +896,46 @@
 })();
 </script>
 
+<main id="main-content">
+<h1 class="sr-only">Agaton Ristorante e Pizzeria — Gamla Stan, Stockholm</h1>
+
 <!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hero-bg">
-    <img src="photos/interior-01.jpg" alt="Agatons matsal">
+<section class="hero" aria-label="Introduktion">
+  <div class="hero-bg" aria-hidden="true">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="photos/interior-01.jpg">
+      <source src="https://raw.githubusercontent.com/dennis578/agaton-media/main/Agaton_Home.mp4" type="video/mp4">
+      <img src="photos/interior-01.jpg" alt="">
+    </video>
   </div>
 
   <div class="hero-inner">
-    <img src="agaton_logo.svg" alt="Agaton" id="hero-logo" style="height:clamp(80px,12vw,170px);width:auto;display:block;position:absolute;cursor:grab;user-select:none;z-index:5;" title="Dra för att flytta">
-    <div class="hero-bottom">
-      <p class="hero-lede">
-        Vedugnspizza, handgjord pasta och ett glas vin som smakar av eftermiddagssol i Toscana — på Västerlånggatan sedan 1999.
-      </p>
+    <img src="agaton_logo.svg" alt="" id="hero-logo" style="height:clamp(80px,12vw,170px);width:auto;display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-90%);z-index:5;">
 
+    <div class="hero-tagline">
+      <p class="lede">
+        Vedugnspizza, handgjord pasta och ett glas vin som smakar<br>av eftermiddagssol i Toscana — på Västerlånggatan sedan 1999.
+      </p>
+      <div class="rule"></div>
+    </div>
+
+    <div class="hero-rail">
       <div class="hero-meta">
-        <div>
-          Öppet ikväll
-          <strong>17 – 23</strong>
+        <div data-today-hours>
+          Öppet idag
+          <strong>11 – 22</strong>
         </div>
         <div>
           Adress
           <strong>Västerlånggatan 72, Stockholm</strong>
         </div>
       </div>
-
+      <div class="rail-divider"></div>
       <div class="hero-ctas">
         <a href="#booking" class="btn btn-brick btn-lg">Boka bord</a>
         <a href="menu.html" class="btn btn-ghost-light">Se menyn</a>
@@ -823,21 +949,22 @@
 
 
 <!-- ============ INTRO / Benvenuti ============ -->
-<section class="intro" style="position:relative;overflow:hidden;">
+<section class="intro" aria-labelledby="intro-heading" style="position:relative;overflow:hidden;">
   <!-- corner sprig top right -->
-  <svg style="position:absolute;top:40px;right:-10px;width:clamp(100px,14vw,200px);opacity:.11;color:var(--brick);pointer-events:none;transform:rotate(180deg);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5,135 C20,110 40,85 65,65 C85,50 108,38 130,30"/><path d="M30,115 C18,105 16,90 25,83 C28,96 31,107 30,115Z"/><line x1="30" y1="115" x2="24" y2="88"/><path d="M60,88 C50,76 52,62 62,56 C63,70 64,80 60,88Z"/><circle cx="42" cy="100" r="3.5"/><circle cx="77" cy="73" r="3"/></svg>
+  <svg aria-hidden="true" style="position:absolute;top:40px;right:-10px;width:clamp(100px,14vw,200px);opacity:.11;color:var(--brick);pointer-events:none;transform:rotate(180deg);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5,135 C20,110 40,85 65,65 C85,50 108,38 130,30"/><path d="M30,115 C18,105 16,90 25,83 C28,96 31,107 30,115Z"/><line x1="30" y1="115" x2="24" y2="88"/><path d="M60,88 C50,76 52,62 62,56 C63,70 64,80 60,88Z"/><circle cx="42" cy="100" r="3.5"/><circle cx="77" cy="73" r="3"/></svg>
   <!-- olive branch bottom left -->
-  <svg style="position:absolute;bottom:-10px;left:-10px;width:clamp(160px,22vw,320px);opacity:.13;color:var(--brick);pointer-events:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10,100 C40,85 80,70 120,58 C155,48 180,42 195,40"/><path d="M35,90 C28,75 32,62 42,60 C42,74 40,83 35,90Z"/><line x1="35" y1="90" x2="40" y2="67"/><path d="M65,78 C72,63 80,56 88,58 C82,70 75,77 65,78Z"/><line x1="65" y1="78" x2="80" y2="61"/><path d="M95,67 C88,52 92,40 102,38 C102,52 100,61 95,67Z"/><line x1="95" y1="67" x2="100" y2="45"/><path d="M130,55 C137,40 145,34 153,36 C147,48 140,54 130,55Z"/><path d="M160,46 C153,31 157,19 167,17 C167,31 165,40 160,46Z"/><circle cx="50" cy="88" r="4"/><circle cx="110" cy="62" r="3.5"/><circle cx="172" cy="38" r="3"/></svg>
+  <svg aria-hidden="true" style="position:absolute;bottom:-10px;left:-10px;width:clamp(160px,22vw,320px);opacity:.13;color:var(--brick);pointer-events:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10,100 C40,85 80,70 120,58 C155,48 180,42 195,40"/><path d="M35,90 C28,75 32,62 42,60 C42,74 40,83 35,90Z"/><line x1="35" y1="90" x2="40" y2="67"/><path d="M65,78 C72,63 80,56 88,58 C82,70 75,77 65,78Z"/><line x1="65" y1="78" x2="80" y2="61"/><path d="M95,67 C88,52 92,40 102,38 C102,52 100,61 95,67Z"/><line x1="95" y1="67" x2="100" y2="45"/><path d="M130,55 C137,40 145,34 153,36 C147,48 140,54 130,55Z"/><path d="M160,46 C153,31 157,19 167,17 C167,31 165,40 160,46Z"/><circle cx="50" cy="88" r="4"/><circle cx="110" cy="62" r="3.5"/><circle cx="172" cy="38" r="3"/></svg>
   <div class="container">
     <div class="intro-grid">
       <div class="intro-copy reveal">
         <span class="script">Benvenuti</span>
-        <h2>En bit av <span class="bold">Italien</span> i Gamla Stan.</h2>
+        <h2 id="intro-heading">En bit av<br><span class="bold">Italien</span> i<br><span style="white-space: nowrap;">Gamla Stan.</span></h2>
+        <p class="lead">Sedan 1999 har vi serverat ärlig italiensk mat på Västerlånggatan — handgjord pasta, vedugnspizza och viner med rötter i regionen.</p>
         <p>
           Mitt på Västerlånggatan, i ett hus som stått här i ett halvt årtusende, har Agaton serverat ärlig italiensk mat sedan 1999. Före det var det en modebutik — och innan dess mycket annat. Vi har bara tagit vid.
         </p>
         <p>
-          Tänk flaxande ljus mot kullersten, en skiva nybakat bröd med olivolja, och en värd som hellre säger <em>"kom igen"</em> än "har ni bokat?".
+          Tänk flaxande ljus mot kullersten, en skiva nybakat bröd med olivolja, och en värd som hellre säger <em>"kom in"</em> än "har ni bokat?".
         </p>
         <div class="sig">Famiglia Agaton</div>
         <div class="tiny">— Värdar i Gamla Stan sedan 1999</div>
@@ -851,7 +978,7 @@
           <img src="photos/food-31.jpg" alt="Pasta med räkor" loading="lazy">
         </div>
         <div class="photo p3">
-          <img src="photos/food-21.jpg" alt="Rigatoni" loading="lazy">
+          <img src="photos/DSC03961-HDR.jpg" alt="Interiör — pizzaugn och citronträd" loading="lazy">
         </div>
         <div class="stamp-wrap">
           <div class="stamp">
@@ -865,14 +992,14 @@
 </section>
 
 <!-- ============ MENU PREVIEW ============ -->
-<section class="menu-preview" id="menu-preview" style="position:relative;">
+<section class="menu-preview" id="menu-preview" aria-labelledby="menu-preview-heading" style="position:relative;">
   <!-- vine top right -->
-  <svg style="position:absolute;top:20px;right:-10px;width:clamp(200px,28vw,420px);opacity:.09;color:var(--cream);pointer-events:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 140" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10,130 C30,110 60,95 90,88 C120,81 145,82 165,78 C190,73 210,60 230,55 C250,50 270,48 290,52"/><path d="M50,108 C45,95 48,85 55,83 C52,92 50,102 50,108"/><path d="M55,83 C60,75 66,72 70,75"/><path d="M110,86 C108,74 113,65 120,64 C116,73 112,81 110,86"/><path d="M185,72 C185,60 191,52 198,52 C193,60 188,67 185,72"/><path d="M80,92 C72,84 73,74 80,71 C82,80 83,87 80,92Z"/><path d="M150,76 C144,67 146,58 153,55 C154,64 154,71 150,76Z"/></svg>
+  <svg aria-hidden="true" style="position:absolute;top:20px;right:-10px;width:clamp(200px,28vw,420px);opacity:.09;color:var(--cream);pointer-events:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 140" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10,130 C30,110 60,95 90,88 C120,81 145,82 165,78 C190,73 210,60 230,55 C250,50 270,48 290,52"/><path d="M50,108 C45,95 48,85 55,83 C52,92 50,102 50,108"/><path d="M55,83 C60,75 66,72 70,75"/><path d="M110,86 C108,74 113,65 120,64 C116,73 112,81 110,86"/><path d="M185,72 C185,60 191,52 198,52 C193,60 188,67 185,72"/><path d="M80,92 C72,84 73,74 80,71 C82,80 83,87 80,92Z"/><path d="M150,76 C144,67 146,58 153,55 C154,64 154,71 150,76Z"/></svg>
   <div class="container">
     <div class="mp-grid">
       <div class="mp-left reveal">
         <span class="script mp-script">Dal menù</span>
-        <h2>Smaker från <em>Italien</em></h2>
+        <h2 id="menu-preview-heading">Smaker från <em>Italien</em></h2>
         <p class="mp-lead">
           Handgjord pasta, vedugnspizza och noggrant utvalda viner från Toscana till Sicilien. Klassikerna bor här året runt — resten byter vi ut efter säsongen.
         </p>
@@ -888,12 +1015,12 @@
 
         <div class="mp-ctas">
           <a href="menu.html" class="btn btn-candle btn-lg">Se hela menyn</a>
-          <a href="lunch.html" class="mp-link">eller Veckans lunch →</a>
+          <a href="lunch.html" class="btn btn-candle btn-lg">Veckans lunch</a>
         </div>
       </div>
 
       <div class="mp-right reveal reveal-delay-1">
-        <div class="mp-photo-main"><img src="photos/food-20.jpg" alt="Mat och vin"></div>
+        <div class="mp-photo-main"><img src="photos/DSC04055.jpg?v=2" alt="Pizza med räkor och vin"></div>
         <div class="mp-photo-small"><img src="photos/food-15.jpg" alt="Handgjord pasta"></div>
         <div class="mp-stamp">
           <div class="mp-stamp-inner">
@@ -908,180 +1035,94 @@
 </section>
 
 <!-- ============ BOOKING ============ -->
-<section class="booking" id="booking">
+<section class="booking" id="booking" aria-labelledby="booking-heading">
   <div class="container">
     <div class="booking-grid">
-      <div class="reveal">
-        <h2>
-          <span class="script-inline">scrivici —</span>
-          Hör av dig till oss
-        </h2>
-        <p>
-          Boka bord direkt på <strong>+46 08 20 72 99</strong>, eller skicka ett meddelande så återkommer vi inom kort. Frågor om meny, allergier, sällskap eller privata event — vi hjälper till på svenska <em>eller</em> italienska.
-        </p>
-
-        <div style="display:flex; gap: 48px; margin-top: 48px; flex-wrap: wrap;">
-          <div>
-            <div class="tiny" style="color: color-mix(in oklab, var(--cream) 55%, transparent); margin-bottom: 8px; letter-spacing: .16em; text-transform: uppercase; font-size: 11px;">Öppettider</div>
-            <div style="font-family: var(--display); font-size: 17px; line-height: 1.85;">
-              Måndag · 17 – 22<br>
-              Tisdag · 17 – 22<br>
-              Onsdag · 17 – 22<br>
-              Torsdag · 17 – 23<br>
-              Fredag · 17 – 00<br>
-              Lördag · 17 – 00<br>
-              Söndag · stängt
-            </div>
-          </div>
-          <div>
-            <div class="tiny" style="color: color-mix(in oklab, var(--cream) 55%, transparent); margin-bottom: 8px; letter-spacing: .16em; text-transform: uppercase; font-size: 11px;">Kontakt</div>
-            <div style="font-family: var(--display); font-size: 17px; line-height: 1.85;">
-              Västerlånggatan 72<br>
-              111 29 Stockholm<br><br>
-              +46 08 20 72 99<br>
-              info@restaurangagaton.se
-            </div>
-          </div>
+      <div class="reveal booking-intro">
+        <div class="booking-text">
+          <h2 id="booking-heading">scrivici —
+Hör av dig
+till oss</h2>
+          <p>Ring <a href="tel:+460820 7299">+46 08 20 72 99</a> eller mejla <a href="mailto:info@restaurangagaton.se">info@restaurangagaton.se</a> så hjälper vi dig — med bokning, allergier, sällskap eller privata event. Vi pratar gärna svenska <em>eller</em>&nbsp;italienska.</p>
         </div>
+        <figure class="booking-photo">
+          <img src="photos/DSC03946-HDR.jpg" alt="Baren på Agaton med vinglas och vy mot kullerstensgatan" loading="lazy">
+          <figcaption>Baren · Västerlånggatan 72</figcaption>
+        </figure>
       </div>
 
-      <form class="booking-form reveal reveal-delay-2" onsubmit="event.preventDefault(); alert('Tack! Vi återkommer så snart vi kan.');">
-        <h3>Kontakta oss</h3>
-        <p class="small">Vi svarar på din förfrågan inom en timme, alla dagar mellan 10 – 22.</p>
+      <form class="booking-form reveal reveal-delay-2" aria-labelledby="contact-form-heading" novalidate onsubmit="return agatonHandleContact(event);">
+        <h3 id="contact-form-heading">Kontakta oss</h3>
+        <p class="small" id="contact-form-desc">Hör av dig så återkommer vi inom kort. Fält markerade med <span class="req-mark" aria-hidden="true">*</span> är obligatoriska.</p>
 
         <div class="form-row">
           <div class="form-field">
-            <label>Namn</label>
-            <input type="text" placeholder="Ditt namn" required>
+            <label for="contact-name">Namn <span class="req-mark" aria-hidden="true">*</span></label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Ditt namn" required aria-required="true">
           </div>
           <div class="form-field">
-            <label>E-post</label>
-            <input type="email" placeholder="du@exempel.se" required>
+            <label for="contact-email">E-post <span class="req-mark" aria-hidden="true">*</span></label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="du@exempel.se" required aria-required="true">
           </div>
         </div>
 
         <div class="form-row single">
           <div class="form-field">
-            <label>Telefon <span style="color:var(--ink-faint); font-weight: 400;">(valfritt)</span></label>
-            <input type="tel" placeholder="070 123 45 67">
+            <label for="contact-phone">Telefon <span class="opt-label">(valfritt)</span></label>
+            <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="070 123 45 67">
           </div>
         </div>
 
         <div class="form-row single">
           <div class="form-field">
-            <label>Meddelande</label>
-            <textarea rows="5" placeholder="Vad kan vi hjälpa dig med?" required style="width:100%; font-family: inherit; font-size: 15px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--cream); color: var(--wood); resize: vertical; min-height: 120px;"></textarea>
+            <label for="contact-msg">Meddelande <span class="req-mark" aria-hidden="true">*</span></label>
+            <textarea id="contact-msg" name="message" rows="5" placeholder="Vad kan vi hjälpa dig med?" required aria-required="true" style="width:100%; font-family: inherit; font-size: 15px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--cream); color: var(--wood); resize: vertical; min-height: 120px;"></textarea>
           </div>
         </div>
 
+        <div id="contact-status" class="sr-only" role="status" aria-live="polite"></div>
         <button type="submit" class="form-submit">Skicka meddelande</button>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
-<footer class="footer" style="position:relative;overflow:hidden;">
-  <svg style="position:absolute;bottom:10px;right:30px;width:clamp(60px,7vw,100px);opacity:.12;color:var(--cream);pointer-events:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M60,110 C58,90 55,75 52,60 C50,48 52,38 58,30"/><circle cx="60" cy="26" r="5"/><ellipse cx="60" cy="14" rx="3" ry="7"/><ellipse cx="60" cy="38" rx="3" ry="7"/><ellipse cx="48" cy="26" rx="7" ry="3"/><ellipse cx="72" cy="26" rx="7" ry="3"/><path d="M56,70 C46,65 42,55 48,50 C52,60 56,65 56,70Z"/><path d="M54,85 C64,80 68,70 62,65 C58,75 55,80 54,85Z"/></svg>
-  <svg style="position:absolute;top:20px;left:-10px;width:clamp(140px,18vw,260px);opacity:.1;color:var(--cream);pointer-events:none;transform:scaleX(-1);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10,100 C40,85 80,70 120,58 C155,48 180,42 195,40"/><path d="M35,90 C28,75 32,62 42,60 C42,74 40,83 35,90Z"/><line x1="35" y1="90" x2="40" y2="67"/><path d="M65,78 C72,63 80,56 88,58 C82,70 75,77 65,78Z"/><path d="M95,67 C88,52 92,40 102,38 C102,52 100,61 95,67Z"/><circle cx="50" cy="88" r="4"/><circle cx="110" cy="62" r="3.5"/></svg>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <img src="agaton_logo.svg" alt="Agaton Ristorante e Pizzeria" width="140" height="66" style="display:block; margin-bottom: 18px;">
-      <p>Vedugnspizza, handgjord pasta och ärlig italiensk mat. I Gamla Stan sedan 1999.</p>
-    </div>
+</main>
 
-    <div class="footer-col">
-      <h4>Besök oss</h4>
-      <p>
-        Västerlånggatan 72<br>
-        111 29 Stockholm<br><br>
-        +46 08 20 72 99<br>
-        info@restaurangagaton.se
-      </p>
-    </div>
+<!-- Footer mount-point — injiceras av agaton-chrome.js (delas mellan alla sidor) -->
+<footer id="agaton-footer"></footer>
 
-    <div class="footer-col">
-      <h4>Meny & Boka</h4>
-      <ul>
-        <li><a href="menu.html">À la carte</a></li>
-        <li><a href="lunch.html">Veckans lunch</a></li>
-        <li><a href="catering.html">Catering</a></li>
-        <li><a href="chambre-separee.html">Privat matsal</a></li>
-        <li><a href="#booking">Boka bord</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Följ oss</h4>
-      <ul>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="stora-sallskap.html">Stora Sällskap</a></li>
-        <li><a href="faq.html">Vanliga frågor</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <span>© Agaton Ristorante — Mandato di cucinare bene.</span>
-    <span>Illustrazioni · placeholder-text markerad XX</span>
-  </div>
-</footer>
+<script>
+function agatonHandleContact(e){
+  e.preventDefault();
+  const form = e.target;
+  const name = form.querySelector('#contact-name');
+  const email = form.querySelector('#contact-email');
+  const msg = form.querySelector('#contact-msg');
+  const status = form.querySelector('#contact-status');
+  let firstInvalid = null;
+  [name, email, msg].forEach(f => {
+    const valid = f.checkValidity();
+    f.setAttribute('aria-invalid', valid ? 'false' : 'true');
+    if (!valid && !firstInvalid) firstInvalid = f;
+  });
+  if (firstInvalid){
+    status.textContent = 'Vissa fält behöver kompletteras innan formuläret kan skickas.';
+    firstInvalid.focus();
+    return false;
+  }
+  status.textContent = 'Tack! Vi har tagit emot ditt meddelande och återkommer snart.';
+  status.classList.remove('sr-only');
+  status.style.cssText = 'display:block;margin-top:14px;padding:14px 16px;background:color-mix(in oklab,var(--basil) 18%,var(--cream));color:var(--wood);border-radius:6px;font-family:var(--sans);font-size:14px;';
+  form.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
+  return false;
+}
+</script>
 
 <!-- ============ JS ============ -->
 <script>
-  // ===== Draggable hero logo =====
-  (function(){
-    const logo = document.getElementById('hero-logo');
-    const hero = document.querySelector('.hero');
-    const saved = JSON.parse(localStorage.getItem('agaton-logo-pos') || 'null');
-    if (saved) { logo.style.left = saved.x + 'px'; logo.style.top = saved.y + 'px'; }
-    else { logo.style.left = '48px'; logo.style.top = '120px'; }
-    let dragging = false, ox = 0, oy = 0;
-    logo.addEventListener('mousedown', e => {
-      dragging = true;
-      const r = hero.getBoundingClientRect();
-      ox = e.clientX - logo.getBoundingClientRect().left;
-      oy = e.clientY - logo.getBoundingClientRect().top;
-      logo.style.cursor = 'grabbing';
-      e.preventDefault();
-    });
-    document.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const r = hero.getBoundingClientRect();
-      const x = Math.max(0, Math.min(e.clientX - r.left - ox, r.width - logo.offsetWidth));
-      const y = Math.max(0, Math.min(e.clientY - r.top - oy, r.height - logo.offsetHeight));
-      logo.style.left = x + 'px';
-      logo.style.top = y + 'px';
-    });
-    document.addEventListener('mouseup', () => {
-      if (!dragging) return;
-      dragging = false;
-      logo.style.cursor = 'grab';
-      localStorage.setItem('agaton-logo-pos', JSON.stringify({ x: parseInt(logo.style.left), y: parseInt(logo.style.top) }));
-    });
-    // Touch support
-    logo.addEventListener('touchstart', e => {
-      const t = e.touches[0];
-      dragging = true;
-      ox = t.clientX - logo.getBoundingClientRect().left;
-      oy = t.clientY - logo.getBoundingClientRect().top;
-      e.preventDefault();
-    }, { passive: false });
-    document.addEventListener('touchmove', e => {
-      if (!dragging) return;
-      const t = e.touches[0];
-      const r = hero.getBoundingClientRect();
-      const x = Math.max(0, Math.min(t.clientX - r.left - ox, r.width - logo.offsetWidth));
-      const y = Math.max(0, Math.min(t.clientY - r.top - oy, r.height - logo.offsetHeight));
-      logo.style.left = x + 'px';
-      logo.style.top = y + 'px';
-    }, { passive: false });
-    document.addEventListener('touchend', () => {
-      dragging = false;
-      localStorage.setItem('agaton-logo-pos', JSON.stringify({ x: parseInt(logo.style.left), y: parseInt(logo.style.top) }));
-    });
-  })();
+  // Clear any old saved logo position
+  try { localStorage.removeItem('agaton-logo-pos'); } catch(e) {}
 
   // ===== Navbar scroll state =====
   const nav = document.getElementById('navbar');
@@ -1099,6 +1140,14 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Dynamic "Öppet idag" — visar dagens stängningstid (11–22 vardag/sön, 11–23 fre/lör)
+  (function () {
+    const el = document.querySelector('[data-today-hours] strong');
+    if (!el) return;
+    const day = new Date().getDay(); // 0 = sön ... 5 = fre, 6 = lör
+    el.textContent = (day === 5 || day === 6) ? '11 – 23' : '11 – 22';
+  })();
 
 </script>
 

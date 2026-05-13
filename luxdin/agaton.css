@@ -212,8 +212,8 @@ em{ font-style: italic; font-weight: 400; color: var(--brick); font-family: var(
   transition: transform .45s var(--ease), box-shadow .45s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
   border:1px solid transparent;
 }
-.btn::after{ content:"→"; font-size:16px; transition: transform .4s var(--ease); letter-spacing:0; }
-.btn:hover::after{ transform: translateX(4px); }
+.btn::after{ content: none; }
+.btn:hover::after{ transform: none; }
 
 .btn-brick{ background: var(--brick); color: var(--cream); }
 .btn-brick:hover{ background: var(--brick-deep); transform: translateY(-2px); box-shadow: var(--shadow-md); }

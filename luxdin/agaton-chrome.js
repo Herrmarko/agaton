@@ -6,6 +6,24 @@
   const script = document.currentScript;
   const active = script?.dataset?.active || '';
 
+  // ---- a11y: länka in a11y.css (en gång) ----
+  if (!document.getElementById('agaton-a11y-css')){
+    const l = document.createElement('link');
+    l.id = 'agaton-a11y-css';
+    l.rel = 'stylesheet';
+    l.href = 'a11y.css';
+    document.head.appendChild(l);
+  }
+  // ---- a11y: skip-link injiceras först i body ----
+  function injectSkipLink(){
+    if (document.querySelector('.skip-link')) return;
+    const a = document.createElement('a');
+    a.className = 'skip-link';
+    a.href = '#main-content';
+    a.textContent = 'Hoppa till huvudinnehåll';
+    document.body.insertBefore(a, document.body.firstChild);
+  }
+
   const LINKS = [
     { key: 'home',     label: 'Hem',       href: 'Agaton.html' },
     { key: 'menu',     label: 'Meny',      href: 'menu.html' },
@@ -21,9 +39,9 @@
       const onDark = nav.dataset.onDark === 'true';
       const html = `
         <nav class="navbar ${onDark ? 'on-dark' : ''}" id="navbar">
-          <a href="Agaton.html" class="brand">
-            <img src="agaton_logo_dark.svg" class="brand-logo brand-logo-light" alt="Agaton Ristorante e Pizzeria" width="96" height="46">
-            <img src="agaton_logo.svg" class="brand-logo brand-logo-dark" alt="Agaton Ristorante e Pizzeria" width="96" height="46">
+          <a href="Agaton.html" class="brand" aria-label="Agaton Ristorante e Pizzeria — till startsidan">
+            <img src="agaton_logo_dark.svg" class="brand-logo brand-logo-light" alt="" width="96" height="46">
+            <img src="agaton_logo.svg" class="brand-logo brand-logo-dark" alt="" width="96" height="46">
           </a>
           <div class="nav-links">
             ${LINKS.map(l => '<a href="' + l.href + '" class="nav-link ' + (l.key === active ? 'active' : '') + '">' + l.label + '</a>').join('')}
@@ -32,11 +50,11 @@
             <a href="menu.html" class="nav-cta nav-cta-ghost">Se menyn</a>
             <a href="Agaton.html#booking" class="nav-cta">Boka bord</a>
           </div>
-          <button class="nav-burger" id="nav-burger" aria-label="Öppna meny">
-            <span></span><span></span><span></span>
+          <button class="nav-burger" id="nav-burger" type="button" aria-label="Öppna meny" aria-expanded="false" aria-controls="nav-drawer">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
           </button>
         </nav>
-        <div class="nav-drawer" id="nav-drawer">
+        <div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Huvudmeny" aria-hidden="true">
           <div class="nav-drawer-inner">
             <div class="nav-drawer-links">
               ${LINKS.map(l => '<a href="' + l.href + '" class="nav-drawer-link ' + (l.key === active ? 'active' : '') + '">' + l.label + '</a>').join('')}
@@ -61,13 +79,35 @@
       burger?.addEventListener('click', () => {
         const open = drawer.classList.toggle('open');
         burger.classList.toggle('open', open);
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? 'Stäng meny' : 'Öppna meny');
+        drawer.setAttribute('aria-hidden', String(!open));
         document.body.style.overflow = open ? 'hidden' : '';
+        if (open){
+          const first = drawer.querySelector('a, button');
+          first?.focus();
+        }
+      });
+      // Esc stänger drawer
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('open')){
+          drawer.classList.remove('open');
+          burger.classList.remove('open');
+          burger.setAttribute('aria-expanded', 'false');
+          burger.setAttribute('aria-label', 'Öppna meny');
+          drawer.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          burger.focus();
+        }
       });
       // Close on link click
       drawer?.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
           drawer.classList.remove('open');
           burger.classList.remove('open');
+          burger.setAttribute('aria-expanded', 'false');
+          burger.setAttribute('aria-label', 'Öppna meny');
+          drawer.setAttribute('aria-hidden', 'true');
           document.body.style.overflow = '';
         });
       });
@@ -79,23 +119,23 @@
         <footer class="footer">
           <div class="footer-top">
             <div class="footer-brand">
-              <img src="agaton_logo.svg" alt="Agaton Ristorante e Pizzeria" width="140" height="66" style="display:block; margin-bottom: 18px;">
-              <p style="color:color-mix(in oklab,var(--cream) 70%,transparent);font-size:14px;line-height:1.7;margin-top:6px;max-width:34ch;">Vedugnspizza, handgjord pasta och ärlig italiensk mat sedan 1999.</p>
+              <img src="agaton_logo.svg" alt="Agaton Ristorante e Pizzeria" width="200" height="94" style="display:block; margin: 0 auto 22px;" loading="lazy">
+              <p style="color:color-mix(in oklab,var(--cream) 70%,transparent);font-size:14px;line-height:1.7;margin-top:6px;max-width:34ch;text-align:center;margin-left:auto;margin-right:auto;">Vedugnspizza, handgjord pasta<br>och ärlig italiensk mat sedan 1999.</p>
             </div>
             <div class="footer-col">
               <h4>Öppettider</h4>
               <ul class="footer-hours">
-                <li><span>Måndag</span><span>17 – 22</span></li>
-                <li><span>Tisdag</span><span>17 – 22</span></li>
-                <li><span>Onsdag</span><span>17 – 22</span></li>
-                <li><span>Torsdag</span><span>17 – 23</span></li>
-                <li><span>Fredag</span><span>17 – 00</span></li>
-                <li><span>Lördag</span><span>17 – 00</span></li>
-                <li><span>Söndag</span><span>Stängt</span></li>
+                <li><span>Måndag</span><span>11 – 22</span></li>
+                <li><span>Tisdag</span><span>11 – 22</span></li>
+                <li><span>Onsdag</span><span>11 – 22</span></li>
+                <li><span>Torsdag</span><span>11 – 22</span></li>
+                <li><span>Fredag</span><span>11 – 23</span></li>
+                <li><span>Lördag</span><span>11 – 23</span></li>
+                <li><span>Söndag</span><span>11 – 22</span></li>
               </ul>
             </div>
-            <div class="footer-col"><h4>Besök oss</h4><p>Västerlånggatan 72<br>111 29 Stockholm<br><br>+46 08 20 72 99<br>info@restaurangagaton.se</p></div>
-            <div class="footer-col"><h4>Meny & Boka</h4><ul><li><a href="menu.html">À la carte</a></li><li><a href="lunch.html">Veckans lunch</a></li><li><a href="stora-sallskap.html">Stora sällskap</a></li><li><a href="chambre-separee.html">Privat matsal</a></li><li><a href="catering.html">Catering</a></li><li><a href="Agaton.html#booking">Boka bord</a></li><li><a href="faq.html">Vanliga frågor</a></li></ul></div>
+            <div class="footer-col footer-visit"><h4>Besök oss</h4><div class="visit-address"><strong>Västerlånggatan 72</strong><span>111 29 Stockholm</span></div><div class="visit-contact"><a href="tel:+460820 7299" class="visit-link"><span class="visit-link__lbl">Tel</span><span class="visit-link__val">+46 08 20 72 99</span></a><a href="mailto:info@restaurangagaton.se" class="visit-link"><span class="visit-link__lbl">E-post</span><span class="visit-link__val">info@restaurangagaton.se</span></a></div></div>
+            <div class="footer-col"><h4>Snabba länkar</h4><ul><li><a href="lunch.html">Veckans lunch</a></li><li><a href="stora-sallskap.html">Stora sällskap</a></li><li><a href="Agaton.html#booking">Boka bord</a></li><li><a href="faq.html">Vanliga frågor</a></li><li><a href="https://jobb.boqueria.se/departments/restaurang-agaton-41b0693f-2ec3-466d-bb56-2200a57979fd" target="_blank" rel="noopener">Jobba hos oss</a></li></ul></div>
           </div>
           <div class="footer-bottom"><span>© Agaton Ristorante · Stockholm</span><span>Placeholder-innehåll markerat XX</span></div>
         </footer>
@@ -145,7 +185,7 @@
     // Lazy-load additional font families
     const extraFonts = document.createElement('link');
     extraFonts.rel = 'stylesheet';
-    extraFonts.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap';
+    extraFonts.href = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500&display=swap';
     document.head.appendChild(extraFonts);
 
     const saved = JSON.parse(localStorage.getItem('agaton-tweaks') || '{}');
@@ -217,15 +257,25 @@
     css.id = 'agaton-chrome-css';
     css.textContent = `
       .footer{ padding: 100px 48px 36px; background: var(--wood); }
-      .footer-top{ display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.1fr; gap: 56px; padding-bottom: 72px; border-bottom: 1px solid color-mix(in oklab, var(--cream) 12%, transparent); max-width: 1600px; margin: 0 auto; }
+      .footer-top{ display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.1fr; gap: 56px; padding-bottom: 72px; border-bottom: 1px solid color-mix(in oklab, var(--cream) 12%, transparent); max-width: 1400px; margin: 0 auto; align-items: center; }
+      .footer-brand{ align-self: center; text-align: center; }600px; margin: 0 auto; }
       .footer-hours{ list-style: none; display: flex; flex-direction: column; gap: 7px; font-variant-numeric: tabular-nums; }
-      .footer-hours li{ display: flex; justify-content: space-between; font-size: 13.5px; color: color-mix(in oklab, var(--cream) 82%, transparent); padding-bottom: 6px; border-bottom: 1px solid color-mix(in oklab, var(--cream) 8%, transparent); }
-      .footer-hours li span:first-child{ font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: color-mix(in oklab, var(--cream) 55%, transparent); align-self: center; }
+      .footer-hours li{ display: flex; justify-content: space-between; font-size: 14.5px; color: color-mix(in oklab, var(--cream) 94%, transparent); padding-bottom: 6px; border-bottom: 1px solid color-mix(in oklab, var(--cream) 8%, transparent); }
+      .footer-hours li span:first-child{ font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in oklab, var(--cream) 88%, transparent); align-self: center; font-weight: 500; }
       .footer-col h4{ font-family: var(--sans); font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--cream-3); margin-bottom: 22px; font-weight: 500; }
       .footer-col ul{ list-style: none; display: flex; flex-direction: column; gap: 12px; }
       .footer-col a{ color: color-mix(in oklab, var(--cream) 82%, transparent); font-size: 15px; transition: color .3s var(--ease); }
       .footer-col a:hover{ color: var(--candle); }
       .footer-col p{ color: color-mix(in oklab, var(--cream) 72%, transparent); font-size: 14px; line-height: 1.75; }
+      .footer-visit h4{ margin-bottom: 24px; }
+      .visit-address{ display: flex; flex-direction: column; gap: 4px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid color-mix(in oklab, var(--cream) 16%, transparent); }
+      .visit-address strong{ font-family: var(--display); font-weight: 500; font-size: 19px; letter-spacing: .01em; color: var(--cream); }
+      .visit-address span{ font-size: 13px; color: color-mix(in oklab, var(--cream) 62%, transparent); letter-spacing: .04em; }
+      .visit-contact{ display: flex; flex-direction: column; gap: 14px; }
+      .visit-link{ display: flex; flex-direction: column; gap: 3px; text-decoration: none; color: var(--cream); transition: color .2s var(--ease, ease); }
+      .visit-link__lbl{ font-family: var(--sans); font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: color-mix(in oklab, var(--cream) 50%, transparent); font-weight: 600; }
+      .visit-link__val{ font-family: var(--display); font-size: 16px; letter-spacing: .01em; color: var(--cream); border-bottom: 1px solid transparent; width: fit-content; transition: border-color .2s ease, color .2s ease; }
+      .visit-link:hover .visit-link__val{ color: var(--candle); border-bottom-color: var(--candle); }
       .footer-bottom{ max-width: 1600px; margin: 36px auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: color-mix(in oklab, var(--cream) 55%, transparent); }
       @media (max-width: 900px){
         .footer{ padding: 60px 20px 24px; }
@@ -451,6 +501,7 @@
         .aip-tab{ background: transparent; border: 1px solid rgba(46,26,16,.15); border-radius: 999px; padding: 7px 16px; font-family: var(--sans, system-ui); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; color: var(--wood, #2E1A10); cursor: pointer; transition: all .2s ease; }
         .aip-tab:hover{ border-color: var(--brick, #B23A2E); }
         .aip-tab.active{ background: var(--wood, #2E1A10); color: var(--cream, #FBF8F4); border-color: var(--wood, #2E1A10); }
+        .aip-hint{ color: rgba(46,26,16,.72) !important; }
         .aip-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 20px 32px; overflow-y: auto; flex: 1; }
         .aip-thumb{ position: relative; aspect-ratio: 1; border: 2px solid transparent; border-radius: 8px; overflow: hidden; cursor: pointer; padding: 0; background: #eee; transition: transform .2s ease, border-color .2s ease; }
         .aip-thumb img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
@@ -480,8 +531,9 @@
   }
 
   if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', () => { render(); mountTweaks(); mountImagePicker(); });
+    document.addEventListener('DOMContentLoaded', () => { injectSkipLink(); render(); mountTweaks(); mountImagePicker(); });
   } else {
+    injectSkipLink();
     render();
     mountTweaks();
     mountImagePicker();

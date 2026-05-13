@@ -138,20 +138,32 @@
 }
 .s-form-inner{
   max-width: 1180px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
 }
-.s-form-intro .eyebrow{ font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--brick); font-weight: 500; margin-bottom: 16px; }
-.s-form-intro h2{ font-family: var(--display); font-style: italic; font-size: clamp(36px, 4.4vw, 56px); line-height: 1.03; color: var(--wood); margin-bottom: 24px; letter-spacing: -0.015em; }
-.s-form-intro p{ font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 32px; max-width: 46ch; }
+.s-form-intro .eyebrow{ font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--brick); margin-bottom: 22px; }
+.s-form-intro h2{ font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(48px, 6.4vw, 84px); line-height: .92; color: var(--wood); letter-spacing: -0.022em; margin-bottom: 28px; text-wrap: balance; }
+.s-form-intro h2 .rule{ display: inline-block; width: 90px; height: 1px; background: var(--brick); vertical-align: middle; margin-left: 14px; margin-bottom: 0.28em; }
+.s-form-intro > p{ font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink-soft); max-width: 46ch; margin-bottom: 52px; }
 .s-form-intro .tiny{
-  display: flex; flex-direction: column; gap: 16px;
-  padding-top: 24px; border-top: 1px solid var(--line-faint);
+  display: flex; flex-direction: column; gap: 26px;
+  padding-top: 24px;
 }
-.s-form-intro .tiny-row{ display: flex; gap: 16px; align-items: baseline; }
-.s-form-intro .tiny-row .lbl{ font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; min-width: 68px; }
-.s-form-intro .tiny-row .v{ font-family: var(--display); font-size: 18px; color: var(--wood); }
-.s-form-intro .tiny-row .v a{ color: var(--wood); }
+.s-form-intro .tiny-row{
+  display: grid; grid-template-columns: 140px 1fr; gap: 28px;
+  padding-bottom: 22px; border-bottom: 1px solid var(--line-faint);
+}
+.s-form-intro .tiny-row:last-child{ border-bottom: none; padding-bottom: 0; }
+.s-form-intro .tiny-row .lbl{
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 600; padding-top: 6px;
+}
+.s-form-intro .tiny-row .v{ font-family: var(--display); font-size: 20px; line-height: 1.35; color: var(--wood); }
+.s-form-intro .tiny-row .v a{ color: var(--wood); transition: color .3s var(--ease); }
 .s-form-intro .tiny-row .v a:hover{ color: var(--brick); }
+.s-form-intro .tiny-row .v .sub{ display: block; margin-top: 4px; font-family: var(--sans); font-size: 13px; color: var(--ink-soft); letter-spacing: 0; }
+.s-form-intro .tiny-row .v .hours{ display: grid; grid-template-columns: auto 1fr; column-gap: 18px; row-gap: 6px; font-family: var(--display); font-size: 18px; line-height: 1.3; color: var(--wood); }
+.s-form-intro .tiny-row .v .hours .day{ color: var(--ink-soft); font-style: italic; }
+.s-form-intro .tiny-row .v .hours .time{ font-variant-numeric: tabular-nums; }
 
 .s-form{
   background: var(--white); border: 1px solid var(--line-faint);
@@ -210,6 +222,8 @@
 
 <div id="agaton-nav" data-on-dark="true"></div>
 
+<main id="main-content">
+
 <!-- HERO -->
 <section class="s-hero" style="position:relative;">
   <svg style="position:absolute;top:30px;right:-10px;width:clamp(180px,24vw,380px);opacity:.1;color:var(--cream);pointer-events:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 140" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10,130 C30,110 60,95 90,88 C120,81 145,82 165,78 C190,73 210,60 230,55 C250,50 270,48 290,52"/><path d="M50,108 C45,95 48,85 55,83 C52,92 50,102 50,108"/><path d="M55,83 C60,75 66,72 70,75"/><path d="M110,86 C108,74 113,65 120,64 C116,73 112,81 110,86"/><path d="M80,92 C72,84 73,74 80,71 C82,80 83,87 80,92Z"/><path d="M150,76 C144,67 146,58 153,55 C154,64 154,71 150,76Z"/></svg>
@@ -217,7 +231,7 @@
   <div class="s-hero-inner">
     <span class="script">per i grandi gruppi</span>
     <h1>För stora sällskap</h1>
-    <p>Bröllop, företagsmiddagar, födelsedagar eller en kväll med hela vängänget — vi gör plats. Upp till 60 personer, alltid med ärlig italiensk mat och stora delningsfat mitt på bordet.</p>
+    <p>Bröllop, företagsmiddagar, födelsedagar eller en kväll med hela vängänget — vi gör plats. Upp till 120 personer, alltid med ärlig italiensk mat och stora delningsfat mitt på bordet.</p>
   </div>
 </section>
 
@@ -245,7 +259,7 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
 
       <!-- MENU UNO -->
-      <div style="background:var(--white);padding:52px 44px;">
+      <div style="background:var(--white);padding:52px 44px;display:flex;flex-direction:column;">
         <div style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;">Menu 3 Piatti</div>
         <h3 style="font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(32px,4vw,52px);color:var(--wood);line-height:1;margin-bottom:8px;">Menu Uno</h3>
         <p style="font-family:var(--sans);font-size:14px;letter-spacing:.06em;color:var(--brick);font-weight:500;margin-bottom:40px;">525 kr / person</p>
@@ -266,13 +280,13 @@
             <p style="font-size:13.5px;color:var(--ink-soft);margin-top:5px;line-height:1.6;">Fråga personalen för dagens smaker.</p>
           </div>
         </div>
-        <div style="margin-top:40px;">
+        <div style="margin-top:auto;padding-top:40px;">
           <a href="#kontakt" class="btn btn-brick">Skicka förfrågan</a>
         </div>
       </div>
 
       <!-- MENU DUE -->
-      <div style="background:var(--brick);padding:52px 44px;position:relative;overflow:hidden;">
+      <div style="background:var(--brick);padding:52px 44px;position:relative;overflow:hidden;display:flex;flex-direction:column;">
         <div style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:color-mix(in oklab,var(--cream) 60%,transparent);margin-bottom:10px;">Menu 3 Piatti</div>
         <h3 style="font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(32px,4vw,52px);color:var(--cream);line-height:1;margin-bottom:8px;">Menu Due</h3>
         <p style="font-family:var(--sans);font-size:14px;letter-spacing:.06em;color:var(--candle);font-weight:500;margin-bottom:40px;">625 kr / person</p>
@@ -294,13 +308,13 @@
             <p style="font-size:13.5px;color:color-mix(in oklab,var(--cream) 72%,transparent);margin-top:5px;line-height:1.6;">Klassisk italiensk tiramisù på vårt vis.</p>
           </div>
         </div>
-        <div style="margin-top:40px;">
+        <div style="margin-top:auto;padding-top:40px;">
           <a href="#kontakt" class="btn btn-ghost-light">Skicka förfrågan</a>
         </div>
       </div>
 
     </div>
-    <p style="text-align:center;color:var(--wood);font-size:13px;font-weight:500;margin-top:24px;line-height:1.7;">Vinpaket kan läggas till från 295 kr / person &nbsp;·&nbsp; Alla priser inkl. moms.</p>
+    <p style="text-align:center;color:var(--wood);font-size:13px;font-weight:500;margin-top:24px;line-height:1.7;">Vinpaket kan läggas till från 395 kr / person &nbsp;·&nbsp; Alla priser inkl. moms.</p>
   </div>
 </section>
 
@@ -309,14 +323,15 @@
   <div class="s-form-inner">
 
     <div class="s-form-intro">
-      <div class="eyebrow">Skicka förfrågan</div>
-      <h2>Berätta om ert sällskap.</h2>
+      <div class="eyebrow">Ristorante Agaton</div>
+      <h2>Berätta om <span class="rule" aria-hidden="true"></span><br>ert sällskap.</h2>
       <p>Fyll i formuläret så återkommer vi inom en dag med förslag på datum, meny och pris. Eller ring — vi svarar helst i luren.</p>
 
       <div class="tiny">
-        <div class="tiny-row"><span class="lbl">Telefon</span><span class="v"><a href="tel:+4608207299">+46 08 20 72 99</a></span></div>
-        <div class="tiny-row"><span class="lbl">E-post</span><span class="v"><a href="mailto:info@restaurangagaton.se">info@restaurangagaton.se</a></span></div>
-        <div class="tiny-row"><span class="lbl">Besök</span><span class="v">Västerlånggatan 72, Stockholm</span></div>
+        <div class="tiny-row"><span class="lbl">Adress</span><span class="v">Västerlånggatan 72<span class="sub">111 29 Stockholm · Gamla Stan</span></span></div>
+        <div class="tiny-row"><span class="lbl">Telefon</span><span class="v"><a href="tel:+4608207299">+46 08 20 72 99</a><span class="sub">Bokning · take away</span></span></div>
+        <div class="tiny-row"><span class="lbl">E-post</span><span class="v"><a href="mailto:info@restaurangagaton.se">info@restaurangagaton.se</a><span class="sub">Frågor · press · events</span></span></div>
+        <div class="tiny-row"><span class="lbl">Öppet</span><span class="v"><span class="hours"><span class="day">Mån – Tor</span><span class="time">11 – 22</span><span class="day">Fre – Lör</span><span class="time">11 – 23</span><span class="day">Sön</span><span class="time">11 – 22</span></span></span></div>
       </div>
     </div>
 
@@ -325,23 +340,22 @@
       <p class="sub">Vi återkommer inom en dag med förslag på datum, meny och pris.</p>
 
       <div class="f-2col">
-        <div class="field"><label>Namn *</label><input type="text" required></div>
-        <div class="field"><label>Tillfälle</label><input type="text" placeholder="t.ex. 40-årsfest, kickoff"></div>
+        <div class="field"><label for="stora-sallskap-namn-1">Namn <span class="req-mark" aria-hidden="true">*</span></label><input id="stora-sallskap-namn-1" autocomplete="name" aria-required="true" type="text" required></div>
+        <div class="field"><label for="stora-sallskap-tillfalle-2">Tillfälle</label><input id="stora-sallskap-tillfalle-2" type="text" placeholder="t.ex. 40-årsfest, kickoff"></div>
       </div>
 
       <div class="f-2col">
-        <div class="field"><label>E-post *</label><input type="email" required></div>
-        <div class="field"><label>Telefon *</label><input type="tel" required></div>
+        <div class="field"><label for="stora-sallskap-e-post-3">E-post <span class="req-mark" aria-hidden="true">*</span></label><input id="stora-sallskap-e-post-3" autocomplete="email" aria-required="true" type="email" required></div>
+        <div class="field"><label for="stora-sallskap-telefon-4">Telefon <span class="req-mark" aria-hidden="true">*</span></label><input id="stora-sallskap-telefon-4" autocomplete="tel" aria-required="true" type="tel" required></div>
       </div>
 
       <div class="f-2col">
-        <div class="field"><label>Antal gäster *</label>
-          <select required><option>8 – 16</option><option>16 – 30</option><option>30 – 60</option><option>60+</option></select>
+        <div class="field"><label>Antal gäster * <span style="font-weight:400; color: var(--ink-faint); font-size: 11px; letter-spacing: .04em; text-transform: none; margin-left: 6px;">(minimum 9, upp till 120)</span></label>
+          <input type="number" min="9" max="120" step="1" value="9" required oninput="if(this.value!=='' && +this.value<9) this.value=9; if(+this.value>120) this.value=120;" onblur="if(!this.value || +this.value<9) this.value=9;">
         </div>
-        <div class="field"><label>Önskat datum</label><input type="date"></div>
+        <div class="field"><label for="stora-sallskap-onskat-datum-5">Önskat datum</label><input id="stora-sallskap-onskat-datum-5" type="date"></div>
       </div>
-      <div class="field"><label>Menyval</label>
-        <select>
+      <div class="field"><label for="stora-sallskap-menyval-6">Menyval</label><select id="stora-sallskap-menyval-6">
           <option value="">Ingen preferens / övrigt</option>
           <option value="uno">Menu Uno — 525 kr/pers (Carciofi fritti, Sedanini Agaton, Sorbetto)</option>
           <option value="due">Menu Due — 625 kr/pers (Bruschetta con prosciutto, Branzino/Agnello, Tiramisù)</option>
@@ -349,8 +363,7 @@
         </select>
       </div>
 
-      <div class="field"><label>Önskemål &amp; allergier</label>
-        <textarea placeholder="Berätta vad ni drömmer om — tema, mat, dryck, tal, allergier, särskilda önskemål…"></textarea>
+      <div class="field"><label for="stora-sallskap-onskemal-amp-allergier-7">Önskemål &amp; allergier</label><textarea id="stora-sallskap-onskemal-amp-allergier-7" placeholder="Berätta vad ni drömmer om — tema, mat, dryck, tal, allergier, särskilda önskemål…"></textarea>
       </div>
 
       <button type="submit">Skicka förfrågan</button>

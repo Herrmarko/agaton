@@ -213,6 +213,9 @@
       <button class="m-tab" data-target="dolci">Dolci</button>
       <button class="m-tab" data-target="vini">Vini</button>
     </div>
+    <p style="margin-top: 36px; max-width: 52ch; font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink-faint);">
+      Fråga oss gärna om <em style="font-family: var(--display); font-style: italic; color: var(--brick);">allergier</em> eller <em style="font-family: var(--display); font-style: italic; color: var(--brick);">specialkost</em> — vi gör vårt bästa för att anpassa. Alla priser inkluderar moms.
+    </p>
   </div>
   <div class="m-hero-right">
     <img src="photos/food-10.jpg" alt="Vedugnspizza med mozzarella och basilika">
@@ -362,9 +365,7 @@
 
 </div>
 
-<div class="m-note">
-  Fråga oss gärna om <em>allergier</em> eller <em>specialkost</em> — vi gör vårt bästa för att anpassa. Alla priser inkluderar moms.
-</div>
+<!-- allergi-info borttagen -->
 
 <div id="agaton-footer"></div>
 
@@ -384,30 +385,91 @@
     }
   }, { passive: true });
 
-  // Click: smooth scroll with offset
+  // Active state helper
+  const setActive = (id) => {
+    allTabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
+  };
+
+  // Suppress observer updates during programmatic scrolling so the
+  // clicked tab stays active until the scroll settles on its target.
+  let suppressIO = false;
+  let suppressTimer = null;
+  let lockedId = null;
+  let scrollIdleTimer = null;
+
+  // Click: smooth scroll with offset, lock active state to target
   allTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const id = tab.dataset.target;
       const el = document.getElementById(id);
       if (!el) return;
+      lockedId = id;
+      setActive(id);
+      suppressIO = true;
+      clearTimeout(suppressTimer);
       const offset = 72;
       const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top, behavior: 'smooth' });
+      // Fallback: release the lock if no scroll-idle fires within 1.4s
+      suppressTimer = setTimeout(() => { suppressIO = false; lockedId = null; }, 1400);
     });
   });
 
-  // Active state on scroll via IntersectionObserver
-  const setActive = (id) => {
-    allTabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
+  // Release lock when scrolling actually stops
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollIdleTimer);
+    scrollIdleTimer = setTimeout(() => {
+      suppressIO = false;
+      lockedId = null;
+    }, 140);
+  }, { passive: true });
+
+  // Active state on scroll via IntersectionObserver — pick the section
+  // closest to a reference line (just below the sticky tabbar).
+  const pickActiveFromViewport = () => {
+    const refY = 140; // matches sticky tabbar offset
+    let best = null;
+    let bestDist = Infinity;
+    sections.forEach(s => {
+      const r = s.getBoundingClientRect();
+      // Section is "active" while its top is at-or-above the ref line
+      // and its bottom is below it. Score by distance from top to ref.
+      if (r.top <= refY + 1 && r.bottom > refY) {
+        const dist = Math.abs(r.top - refY);
+        if (dist < bestDist) { bestDist = dist; best = s.id; }
+      }
+    });
+    if (!best) {
+      // Fallback: nearest section top to ref line
+      sections.forEach(s => {
+        const r = s.getBoundingClientRect();
+        const dist = Math.abs(r.top - refY);
+        if (dist < bestDist) { bestDist = dist; best = s.id; }
+      });
+    }
+    return best;
   };
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) setActive(e.target.id);
-    });
-  }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+  const io = new IntersectionObserver(() => {
+    if (suppressIO) return;
+    const id = pickActiveFromViewport();
+    if (id) setActive(id);
+  }, { rootMargin: '-120px 0px -55% 0px', threshold: [0, 0.01, 0.5, 1] });
 
   sections.forEach(s => io.observe(s));
+
+  // Also re-evaluate on scroll (cheap, throttled via rAF) so the active
+  // state stays accurate between IO callbacks.
+  let rafPending = false;
+  window.addEventListener('scroll', () => {
+    if (suppressIO || rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      rafPending = false;
+      const id = pickActiveFromViewport();
+      if (id) setActive(id);
+    });
+  }, { passive: true });
 </script>
 
 </body>

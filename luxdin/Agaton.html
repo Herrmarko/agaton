@@ -440,10 +440,23 @@
   .menu-preview{ padding: 90px 0 110px; }
   .mp-grid{ grid-template-columns: 1fr; gap: 80px; }
   .mp-left{ order: 1; }
-  .mp-right{ order: 2; min-height: 500px; max-width: 480px; margin: 0 auto; }
-  .mp-left h2{ font-size: clamp(48px, 11vw, 80px); }
-  .mp-stamp{ width: 100px; height: 100px; top: 20px; right: -20px; }
+  .mp-right{
+    order: 2; max-width: 480px; margin: 0 auto;
+    min-height: 0;
+  }
+  .mp-photo-main{
+    position: relative; top: auto; left: auto;
+    width: 100%; aspect-ratio: 4/5;
+  }
+  .mp-photo-small{
+    position: relative; bottom: auto; right: auto;
+    width: 60%; aspect-ratio: 1/1;
+    margin: -60px 0 0 auto;
+    border-width: 8px;
+  }
+  .mp-stamp{ width: 100px; height: 100px; top: 16px; right: -10px; }
   .mp-stamp-mid{ font-size: 18px; }
+  .mp-left h2{ font-size: clamp(48px, 11vw, 80px); }
 }
 
 /* ============ Signature (full-bleed photo strip) ============ */
@@ -816,9 +829,9 @@
   .intro-photos .p2{ width: 55%; }
   .intro-photos .stamp-wrap{ top: -18px; right: -10px; width: 110px; height: 110px; }
   .mp-grid{ grid-template-columns: 1fr; gap: 48px; }
-  .mp-right{ min-height: 380px; max-width: 100%; }
-  .mp-photo-small{ display: none; }
-  .mp-stamp{ width: 90px; height: 90px; right: -10px; }
+  .mp-right{ max-width: 100%; min-height: 0; }
+  .mp-photo-small{ width: 64%; margin-top: -50px; border-width: 6px; }
+  .mp-stamp{ width: 90px; height: 90px; right: -10px; top: 12px; }
   .mp-left h2{ font-size: clamp(44px, 12vw, 72px); }
   .booking-grid{ grid-template-columns: 1fr; gap: 40px; }
   .booking-form{ padding: 24px 16px; }
